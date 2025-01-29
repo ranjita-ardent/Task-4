@@ -43,14 +43,14 @@ body {
   width: 50%;
 }
 
-.example {
+.to-do-addbtn {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 25px 0 25px 0;
 }
 
-form.example input[type=text] {
+form.to-do-addbtn input[type=text] {
   padding-left: 20px;
   font-size: 17px;
   border: none;
@@ -60,7 +60,7 @@ form.example input[type=text] {
   border-radius: 50px 0px 0px 50px;
 }
 
-form.example button {
+form.to-do-addbtn button {
   float: left;
   width: 10%;
   padding: 10px;
@@ -93,47 +93,35 @@ form.example button {
   margin-right: 15px;
   width: 20px;
   height: 20px;
-  appearance: none; 
-  border: 2px solid #ddd;
+  border: 2px solid #D98326;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.todo-radio:checked {
-  border-color: #D98326; 
-}
-
-.todo-radio:checked::before {
-  content: '\2713'; 
+.todo-radio.checked::after {
+  content: '\2714'; /* Checkmark symbol */
+  font-size: 16px;
+  color: #D98326;
   position: absolute;
-  top: 0;
-  left: 3px;
-  font-size: 14px;
-  color: #D98326; 
-}
-
-.todo-radio:checked + .todo-label {
-  text-decoration: line-through; 
-  color: #aaa; 
+  top: 2px;
+  left: 4px;
 }
 
 .todo-label {
   flex-grow: 1;
   font-size: 1.1rem;
-  transition: color 0.3s ease; 
+}
+
+.todo-label.checked {
+  text-decoration: line-through;
+  color: #C2C2C2;
 }
 
 .todo-delete {
   cursor: pointer;
   color: #B30B04;
   font-size: 1.2rem;
-  transition: color 0.3s;
-}
-
-.todo-delete:hover {
-  color: #B30B04;
 }
 
 hr {
@@ -143,22 +131,21 @@ hr {
 }
 
 .close-item {
-text-align: right;
-margin: 45px 36px 0 0;
-color: #D98326;
+  text-align: right;
+  color: #D98326;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 20px; 
 }
 
 .fa-xmark {
   margin-right: 13px;
 }
 
-
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .todo-container {
-    width: 95%;
+    width: 90%;
   }
 
   .todo-item {
@@ -166,11 +153,52 @@ color: #D98326;
     align-items: flex-start;
   }
 
-  .todo-delete {
-    margin-top: 10px;
+  .todo-radio {
+    margin-right: 10px;
   }
 
-  hr {
-    margin: 15px 0;
+  .todo-label {
+    font-size: 1rem;
+  }
+
+  form.to-do-addbtn input[type=text] {
+    width: 75%;
+  }
+
+  form.to-do-addbtn button {
+    width: 20%;
+    margin-left: 10px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .todo-container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  form.to-do-addbtn input[type=text] {
+    width: 65%;
+    font-size: 15px;
+  }
+
+  form.to-do-addbtn button {
+    width: 30%;
+    font-size: 14px;
+  }
+
+  .todo-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+
+  .todo-radio {
+    margin-right: 5px;
+  }
+
+  .todo-label {
+    font-size: 14px;
   }
 }
