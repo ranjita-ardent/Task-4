@@ -53,25 +53,4 @@ const todoContainer = document.querySelector('#todo-container');
     input.value = '';
   }
 
-  // Event listener for form submission to add task
-  form.addEventListener('submit', addTask);
-
-  // Event delegation for click actions (radio button & delete icon)
-  todoContainer.addEventListener('click', function(e) {
-    // Toggle checked status when radio button or label is clicked
-    if (e.target.classList.contains('todo-radio') || e.target.classList.contains('todo-label')) {
-      const todoItem = e.target.closest('.todo-item');
-      const label = todoItem.querySelector('.todo-label');
-      const radioBtn = todoItem.querySelector('.todo-radio');
-
-      // Toggle the checked state
-      label.classList.toggle('checked');
-      radioBtn.classList.toggle('checked');
-    }
-
-    // Remove todo item and horizontal line when delete icon is clicked
-    if (e.target.classList.contains('todo-delete') || e.target.closest('.todo-delete')) {
-      const todoWrapper = e.target.closest('.todo-wrapper');
-      todoWrapper.remove(); // Remove the entire wrapper (todo item + hr)
-    }
-  });
+ 
