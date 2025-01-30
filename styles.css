@@ -1,27 +1,23 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-}
-
-.navbar-container {
-  background-color: #F1ECE6;
-  width: 100%;
-  height: auto;
-  text-align: center;
-  padding: 17px;
-}
-
-.logo {
-  width: 180px;
-  height: auto;
-}
-
-.personal-professional-section {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .navbar-container {
+    background-color: #F1ECE6;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 17px;
+  }
+  .logo {
+    width: 180px;
+    height: auto;
+  }
+  .personal-professional-section {
   display: flex;
   background-color: #F3F3F3;
   width: 100%;
@@ -32,25 +28,35 @@ body {
   text-align: center;
   align-items: end;
 }
-
 .personal {
-  border-bottom: 3px solid #D98326;
   width: 50%;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
 }
-
+.Professional {
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.personal.active {
+  border-bottom: 3px solid #D98326; 
+}
+.Professional.active {
+  border-bottom: 3px solid #D98326; 
+  color: black;
+}
 .Professional {
   color: #969696;
-  width: 50%;
 }
-
-.to-do-addbtn {
+.to-do-addbtn-txtField {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 25px 0 25px 0;
 }
-
-form.to-do-addbtn input[type=text] {
+form.to-do-addbtn-txtField input[type=text] {
   padding-left: 20px;
   font-size: 17px;
   border: none;
@@ -59,8 +65,7 @@ form.to-do-addbtn input[type=text] {
   background: #F1ECE6;
   border-radius: 50px 0px 0px 50px;
 }
-
-form.to-do-addbtn button {
+form.to-do-addbtn-txtField button {
   float: left;
   width: 10%;
   padding: 10px;
@@ -71,14 +76,20 @@ form.to-do-addbtn button {
   border-left: none;
   border: none;
 }
-
-.todo-container {
+.todo-container-close-item {
   width: 60%;
   background-color: #F1ECE6;
   padding: 20px;
   border-radius: 50px;
   margin-top: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+.todo-container {
+  width: 80%;
+  background-color: #F1ECE6;
+  padding: 20px;
+  border-radius: 50px;
+  margin-top: 30px;
   margin: auto;
 }
 
@@ -88,7 +99,6 @@ form.to-do-addbtn button {
   align-items: center;
   padding: 5px 0;
 }
-
 .todo-radio {
   margin-right: 15px;
   width: 20px;
@@ -98,7 +108,6 @@ form.to-do-addbtn button {
   position: relative;
   cursor: pointer;
 }
-
 .todo-radio.checked::after {
   content: '\2714'; /* Checkmark symbol */
   font-size: 16px;
@@ -107,29 +116,24 @@ form.to-do-addbtn button {
   top: 2px;
   left: 4px;
 }
-
 .todo-label {
   flex-grow: 1;
   font-size: 1.1rem;
 }
-
 .todo-label.checked {
   text-decoration: line-through;
   color: #C2C2C2;
 }
-
 .todo-delete {
   cursor: pointer;
   color: #B30B04;
   font-size: 1.2rem;
 }
-
 hr {
   border: 0;
   border-top: 1px solid #76B7CD;
   margin: 10px 34px;
 }
-
 .close-item {
   text-align: right;
   color: #D98326;
@@ -137,68 +141,56 @@ hr {
   cursor: pointer;
   margin-top: 20px; 
 }
-
 .fa-xmark {
   margin-right: 13px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .todo-container {
-    width: 90%;
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .todo-container {
+      width: 90%;
+    }
+    .todo-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .todo-radio {
+      margin-right: 10px;
+    }
+    .todo-label {
+      font-size: 1rem;
+    }
+    form.to-do-addbtn-txtField input[type=text] {
+      width: 75%;
+    }
+    form.to-do-addbtn-txtField button {
+      width: 20%;
+      margin-left: 10px;
+    }
   }
 
-  .todo-item {
-    flex-direction: column;
-    align-items: flex-start;
+  @media (max-width: 480px) {
+    .todo-container {
+      width: 100%;
+      padding: 15px;
+    }
+    form.to-do-addbtn-txtField input[type=text] {
+      width: 65%;
+      font-size: 15px;
+    }
+    form.to-do-addbtn-txtField button {
+      width: 30%;
+      font-size: 14px;
+    }
+    .todo-item {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 0;
+    }
+    .todo-radio {
+      margin-right: 5px;
+    }
+    .todo-label {
+      font-size: 14px;
+    }
   }
-
-  .todo-radio {
-    margin-right: 10px;
-  }
-
-  .todo-label {
-    font-size: 1rem;
-  }
-
-  form.to-do-addbtn input[type=text] {
-    width: 75%;
-  }
-
-  form.to-do-addbtn button {
-    width: 20%;
-    margin-left: 10px;
-  }
-}
-
-
-@media (max-width: 480px) {
-  .todo-container {
-    width: 100%;
-    padding: 15px;
-  }
-
-  form.to-do-addbtn input[type=text] {
-    width: 65%;
-    font-size: 15px;
-  }
-
-  form.to-do-addbtn button {
-    width: 30%;
-    font-size: 14px;
-  }
-
-  .todo-item {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 0;
-  }
-
-  .todo-radio {
-    margin-right: 5px;
-  }
-
-  .todo-label {
-    font-size: 14px;
-  }
-}
