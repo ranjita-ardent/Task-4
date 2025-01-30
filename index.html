@@ -10,27 +10,38 @@
 <body>
     <nav class="navbar-container">
         <img src="assets/logo.png" alt="logo" class="logo">
-     </nav>
+    </nav>
      
-     <main>
+    <main>
      <div class="personal-professional-section">
          <div class="personal">Personal</div>
          <div class="Professional">Professional</div>
      </div>
      
-     <form class="to-do-addbtn">
+     <form class="to-do-addbtn-txtField">
          <input type="text" placeholder="What do you need to do?" name="search" id="todo-input">
          <button type="submit">ADD</button>
      </form>
      
-     <div class="todo-container" id="todo-container">
-       <!-- Todo items-->
-       <div class="close-item">
-         <i class="fa-solid fa-xmark"></i>Clear Completed
-       </div>
-     </div>
+     <div class="todo-container-close-item">
+         <div class="todo-container" id="todo-container">  
+           <!-- Todo items will be dynamically added here -->
+            
+           <!-- <div class="todo-wrapper">
+                    <div class="todo-item">
+                        <input type="radio" class="todo-radio" name="radio-btn">
+                        <label class="todo-label">Sample Task</label>
+                        <i class="fa-trash todo-delete fa-solid"></i>
+                    </div>
+                    <hr>
+                </div> -->
+           </div>
+            <div class="close-item">
+            <i class="fa-solid fa-xmark"></i>Clear Completed
+            </div>
+     </div> 
+    </main>
      
-     </main>
      <script src="script.js"></script>
 </body>
 </html>
