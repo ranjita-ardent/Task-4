@@ -1,117 +1,162 @@
-// Select the "Personnal" and "Professional" elements
-const personal = document.querySelector('.personal');
-const professional = document.querySelector('.Professional');
+ // Select the "Personal" and "Professional" elements
+ const personal = document.querySelector('.personal');
+ const professional = document.querySelector('.Professional');
 
-// Select elements related to to-do section
-const todoAddSection = document.querySelector('.to-do-addbtn-txtField');
-const todoContainerCloseItem = document.querySelector('.todo-container-close-item');
-const todoContainer = document.querySelector('#todo-container');
+ // Select elements related to to-do section
+ const todoAddSection = document.querySelector('.to-do-addbtn-txtField');
+ const todoContainerCloseItem = document.querySelector('.todo-container-close-item');
+ const todoContainer = document.querySelector('#todo-container');
 
-// Form and input
-const form = document.querySelector('.to-do-addbtn-txtField');
-const input = document.querySelector('#todo-input');
+ // Form and input
+ const form = document.querySelector('.to-do-addbtn-txtField');
+ const input = document.querySelector('#todo-input');
 
-// Set default active class to Personal
-personal.classList.add('active');
+ // Set default active class to Personal
+ personal.classList.add('active');
 
-// Added event listener to "Personal"
-personal.addEventListener('click', function() {
-  // Added the active class to the "Personal" section and remove it from "Professional"
-  personal.classList.add('active');
-  professional.classList.remove('active');
+ // Set a flag for the current section
+ let currentSection = 'personal'; // Default is Personal
 
-  // Show the to-do section
-  todoAddSection.style.display = 'flex';
-  todoContainerCloseItem.style.display = 'none';
-  todoContainer.style.display = 'none';
-});
+ // Add event listener to "Personal"
+ personal.addEventListener('click', function() {
+   personal.classList.add('active');
+   professional.classList.remove('active');
 
-// Added event listener to "Professional"
-professional.addEventListener('click', function() {
-  // Added the active class to the "Professional" section and remove it from "Personal"
-  professional.classList.add('active');
-  personal.classList.remove('active');
+   currentSection = 'personal';
+   loadTodos(currentSection); // Load saved todos when switching to Personal
 
-  // Hide the to-do section
-  todoAddSection.style.display = 'none';
-  todoContainerCloseItem.style.display = 'none';
-  todoContainer.style.display = 'none';
-});
+   todoContainer.style.display = 'none'; // Ensure todo container is hidden initially
+   todoContainerCloseItem.style.display = 'none'; // Ensure close item is hidden initially
+   if (JSON.parse(localStorage.getItem(currentSection)).length > 0) {
+     todoContainer.style.display = 'block'; // Show todo container if there are tasks
+     todoContainerCloseItem.style.display = 'block'; // Show close item
+   }
+ });
 
-// Function to add a new task
-function addTask(event) {
-  event.preventDefault();
+ // Add event listener to "Professional"
+ professional.addEventListener('click', function() {
+   professional.classList.add('active');
+   personal.classList.remove('active');
 
-  const taskText = input.value.trim();
+   currentSection = 'professional';
+   loadTodos(currentSection); // Load saved todos when switching to Professional
 
-  if (taskText === '') {
-    alert("Please enter a task!");
-    return;
-  }
+   todoContainer.style.display = 'none'; // Ensure todo container is hidden initially
+   todoContainerCloseItem.style.display = 'none'; // Ensure close item is hidden initially
+   if (JSON.parse(localStorage.getItem(currentSection)).length > 0) {
+     todoContainer.style.display = 'block'; // Show todo container if there are tasks
+     todoContainerCloseItem.style.display = 'block'; // Show close item
+   }
+ });
 
-  // Show the to-do container after adding the first task
-  todoContainer.style.display = 'block';
-  todoContainerCloseItem.style.display = 'block';
+ // Function to add a new task
+ function addTask(event) {
+   event.preventDefault();
 
-  // Create new todo item container
-  const todoWrapper = document.createElement('div');
-  todoWrapper.classList.add('todo-wrapper');
+   const taskText = input.value.trim();
 
-  // Create todo item
-  const newTodo = document.createElement('div');
-  newTodo.classList.add('todo-item');
+   if (taskText === '') {
+     alert("Please enter a task!");
+     return;
+   }
 
-  // Radio button
-  const radioBtn = document.createElement('input');
-  radioBtn.type = 'radio';
-  radioBtn.classList.add('todo-radio');
-  radioBtn.name = 'radio-btn';
+   const todos = JSON.parse(localStorage.getItem(currentSection)) || [];
+   todos.push(taskText);
 
-  // Label with task text
-  const label = document.createElement('label');
-  label.classList.add('todo-label');
-  label.textContent = taskText;
+   localStorage.setItem(currentSection, JSON.stringify(todos));
+   loadTodos(currentSection);
 
-  // Trash icon
-  const trashIcon = document.createElement('i');
-  trashIcon.classList.add('fa-trash', 'todo-delete', 'fa-solid');
+   input.value = ''; // Clear the input field
+ }
 
-  // Append radio button, label, and trash icon to newTodo
-  newTodo.appendChild(radioBtn);
-  newTodo.appendChild(label);
-  newTodo.appendChild(trashIcon);
+ // Event listener for form submission to add task
+ form.addEventListener('submit', addTask);
 
-  // Create the horizontal line and append to todoWrapper
-  const hr = document.createElement('hr');
-  todoWrapper.appendChild(newTodo);
-  todoWrapper.appendChild(hr);
+ // Load todos from localStorage based on the current section
+ function loadTodos(section) {
+   const todos = JSON.parse(localStorage.getItem(section)) || [];
+   todoContainer.innerHTML = ''; // Clear the container
 
-  // Append todoWrapper to todoContainer
-  todoContainer.appendChild(todoWrapper);
+   if (todos.length > 0) {
+     todoContainer.style.display = 'block'; // Show todo container if there are tasks
+     todoContainerCloseItem.style.display = 'block'; // Show close item
+   } else {
+     todoContainer.style.display = 'none'; // Hide todo container if no tasks
+     todoContainerCloseItem.style.display = 'none'; // Hide close item
+   }
 
-  // Clear the input field
-  input.value = '';
-}
+   todos.forEach(function(taskText) {
+     const todoWrapper = document.createElement('div');
+     todoWrapper.classList.add('todo-wrapper');
 
-// Event listener for form submission to add task
-form.addEventListener('submit', addTask);
+     const newTodo = document.createElement('div');
+     newTodo.classList.add('todo-item');
 
-// Event delegation for click actions (radio button & delete icon)
-todoContainer.addEventListener('click', function(e) {
-  // Toggle checked status when radio button or label is clicked
-  if (e.target.classList.contains('todo-radio') || e.target.classList.contains('todo-label')) {
-    const todoItem = e.target.closest('.todo-item');
-    const label = todoItem.querySelector('.todo-label');
-    const radioBtn = todoItem.querySelector('.todo-radio');
+     const radioBtn = document.createElement('input');
+     radioBtn.type = 'radio';
+     radioBtn.classList.add('todo-radio');
+     radioBtn.name = 'radio-btn';
 
-    // Toggle the checked state
-    label.classList.toggle('checked');
-    radioBtn.classList.toggle('checked');
-  }
+     const label = document.createElement('label');
+     label.classList.add('todo-label');
+     label.textContent = taskText;
 
-  // Remove todo item and horizontal line when delete icon is clicked
-  if (e.target.classList.contains('todo-delete') || e.target.closest('.todo-delete')) {
-    const todoWrapper = e.target.closest('.todo-wrapper');
-    todoWrapper.remove(); // Remove the entire wrapper (todo item + hr)
-  }
+     const trashIcon = document.createElement('i');
+     trashIcon.classList.add('fa-trash', 'todo-delete', 'fa-solid');
+
+     newTodo.appendChild(radioBtn);
+     newTodo.appendChild(label);
+     newTodo.appendChild(trashIcon);
+
+     const hr = document.createElement('hr');
+     todoWrapper.appendChild(newTodo);
+     todoWrapper.appendChild(hr);
+
+     todoContainer.appendChild(todoWrapper);
+   });
+ }
+
+ // Event for delete (radio button & delete icon)
+ todoContainer.addEventListener('click', function(e) {
+   if (e.target.classList.contains('todo-radio') || e.target.classList.contains('todo-label')) {
+     const todoItem = e.target.closest('.todo-item');
+     const label = todoItem.querySelector('.todo-label');
+     const radioBtn = todoItem.querySelector('.todo-radio');
+
+     label.classList.toggle('checked');
+     radioBtn.classList.toggle('checked');
+   }
+
+   if (e.target.classList.contains('todo-delete') || e.target.closest('.todo-delete')) {
+     const todoWrapper = e.target.closest('.todo-wrapper');
+     const label = todoWrapper.querySelector('.todo-label');
+
+     let todos = JSON.parse(localStorage.getItem(currentSection)) || [];
+     todos = todos.filter(taskText => taskText !== label.textContent);
+
+     localStorage.setItem(currentSection, JSON.stringify(todos));
+     todoWrapper.remove();
+   }
+ });
+
+ // Initialize by loading the todos from the "Personal" section by default
+ loadTodos('personal');
+
+
+ // Selected the "Clear Completed" button (close item)
+const clearCompletedButton = document.querySelector('.close-item');
+
+// Added an event listener for clicking the "Clear Completed" button
+clearCompletedButton.addEventListener('click', function() {
+  // Get all the to-do items (elements) in the UI
+  const todoItems = todoContainer.querySelectorAll('.todo-item');
+
+  // Loop through each to-do item and remove them from both the UI and localStorage
+  todoItems.forEach(todoItem => {
+    // Remove the task from the UI
+    todoItem.closest('.todo-wrapper').remove();
+  });
+
+  // Clear all tasks from localStorage for the current section (Personal or Professional)
+  localStorage.setItem(currentSection, JSON.stringify([])); 
 });
